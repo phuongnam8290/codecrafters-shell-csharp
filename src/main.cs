@@ -10,9 +10,7 @@ class Program
             bool isExitCommand = command.Trim().Equals("exit", StringComparison.OrdinalIgnoreCase);
             
             if (isExitCommand)
-            {
-                break;
-            }
+            { break; }
             Console.WriteLine($"{command}: command not found");
         }
     }
