@@ -1,3 +1,5 @@
+using System.Text;
+
 class Program
 {
     static void Main()
@@ -6,12 +8,27 @@ class Program
             Console.Write("$ ");
         
             // Wait for user input
-            string? command = Console.ReadLine() ?? "";
-            bool isExitCommand = command.Trim().Equals("exit", StringComparison.OrdinalIgnoreCase);
+            string?input = Console.ReadLine() ?? "";
             
-            if (isExitCommand)
-            { break; }
-            Console.WriteLine($"{command}: command not found");
+            string[] tokens = input.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+            tokens = tokens.Length == 0 ? [""] : tokens;
+
+            string command = tokens[0];
+            
+            if (CompareCommand(command, "exit")) { break; }
+
+            if (CompareCommand(command, "echo")) {
+                String result = String.Join(" ", tokens, 1, tokens.Length - 1);
+                Console.WriteLine(result);
+                
+                continue;
+            }
+            
+            Console.WriteLine($"{input}: command not found");
         }
+    }
+
+    private static bool CompareCommand(string token, string command) {
+        return token.Trim().Equals(command, StringComparison.OrdinalIgnoreCase);
     }
 }
